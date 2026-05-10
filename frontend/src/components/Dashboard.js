@@ -10,7 +10,7 @@ function Dashboard() {
   useEffect(() => {
     const interval = setInterval(async () => {
       try {
-        const res = await fetch('http://localhost:5000/events');
+        const res = await fetch('zerovault-production.up.railway.app');
         const data = await res.json();
         setEvents(data.events || []);
         setAlert(data.anomaly_detected ? data.reason : null);
