@@ -13,7 +13,8 @@ console.log("Verifier deployed to:", verifierAddress);
 const IdentityRegistry = await ethers.getContractFactory("IdentityRegistry");
 const registry = await IdentityRegistry.deploy();
 await registry.waitForDeployment();
-console.log("IdentityRegistry deployed to:", await registry.getAddress());
+const registryAddress = await registry.getAddress();
+console.log("IdentityRegistry deployed to:", registryAddress);
 
 // Deploy AccessControl
 const AccessControl = await ethers.getContractFactory("AccessControl");

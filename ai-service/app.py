@@ -4,10 +4,11 @@ import numpy as np
 from sklearn.ensemble import IsolationForest
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, origins="*", supports_credentials=True)
 
 # Training data — normal transaction patterns
 training_data = np.array([
+    # Normal patient logins
     [1, 0.1, 0.2],
     [2, 0.2, 0.1],
     [1, 0.1, 0.3],
@@ -16,6 +17,19 @@ training_data = np.array([
     [1, 0.1, 0.2],
     [2, 0.1, 0.1],
     [1, 0.3, 0.2],
+    [1, 0.1, 0.1],
+    [2, 0.2, 0.3],
+    [1, 0.3, 0.1],
+    [2, 0.1, 0.2],
+    [1, 0.2, 0.2],
+    [2, 0.3, 0.3],
+    [1, 0.1, 0.2],
+    [2, 0.2, 0.2],
+    # Slightly above normal — still legitimate
+    [3, 0.4, 0.3],
+    [3, 0.3, 0.4],
+    [4, 0.4, 0.3],
+    [3, 0.4, 0.4],
 ])
 
 model = IsolationForest(contamination=0.1, random_state=42)

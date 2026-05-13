@@ -15,9 +15,10 @@ function Register() {
 const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
 
-      const commitment = ethers.keccak256(ethers.toUtf8Bytes(secret));
+      const address = await signer.getAddress();
+      const commitment = ethers.keccak256(ethers.toUtf8Bytes(secret + address.toLowerCase()));
 
-      const contractAddress = '0xCC2838Aa9f10376F6030897D5061a3069cAcf365';
+      const contractAddress = '0x2A6FE47DEc77b3e773C1069C0a80846d47A24212';
       const abi = [
         'function registerIdentity(bytes32 commitment) external',
         'function isRegistered(address) view returns (bool)'

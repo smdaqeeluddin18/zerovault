@@ -10,7 +10,9 @@ function Dashboard() {
   useEffect(() => {
     const interval = setInterval(async () => {
       try {
-        const res = await fetch('zerovault-production.up.railway.app');
+       const res = await fetch(window.location.hostname === 'localhost' 
+  ? 'http://localhost:5000/events'
+  : 'https://zerovault-production.up.railway.app/events');
         const data = await res.json();
         setEvents(data.events || []);
         setAlert(data.anomaly_detected ? data.reason : null);
@@ -32,7 +34,7 @@ function Dashboard() {
       const signer = await provider.getSigner();
       const address = await signer.getAddress();
 
-      const contractAddress = '0xCC2838Aa9f10376F6030897D5061a3069cAcf365';
+      const contractAddress = '0x2A6FE47DEc77b3e773C1069C0a80846d47A24212';
       const abi = [
         'function isRegistered(address) view returns (bool)'
       ];
@@ -61,11 +63,43 @@ function Dashboard() {
       <p style={{ color: status.includes('✅') ? 'green' : 'red' }}>{status}</p>
       {isRegistered && (
         <div style={{ marginTop: '10px', padding: '15px', backgroundColor: '#d0f0fd',
-        borderRadius: '10px', maxWidth: '400px', margin: '10px auto' }}>
+        borderRadius: '10px', maxWidth: '500px', margin: '10px auto' }}>
           <h3 style={{ color: '#0077b6' }}>🎉 Verified Patient</h3>
           <p>✅ HIPAA Compliant</p>
           <p>✅ Zero Personal Data Exposed</p>
           <p>✅ Blockchain Verified</p>
+          <hr/>
+          <h4 style={{ color: '#0077b6' }}>📋 Medical Records</h4>
+          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+            <thead>
+              <tr style={{ backgroundColor: '#0077b6', color: 'white' }}>
+                <th style={{ padding: '8px' }}>Date</th>
+                <th style={{ padding: '8px' }}>Doctor</th>
+                <th style={{ padding: '8px' }}>Diagnosis</th>
+                <th style={{ padding: '8px' }}>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style={{ backgroundColor: '#f0f9ff' }}>
+                <td style={{ padding: '8px' }}>2026-01-15</td>
+                <td style={{ padding: '8px' }}>Dr. Sharma</td>
+                <td style={{ padding: '8px' }}>Annual Checkup</td>
+                <td style={{ padding: '8px', color: 'green' }}>✅ Normal</td>
+              </tr>
+              <tr>
+                <td style={{ padding: '8px' }}>2026-02-20</td>
+                <td style={{ padding: '8px' }}>Dr. Patel</td>
+                <td style={{ padding: '8px' }}>Blood Test</td>
+                <td style={{ padding: '8px', color: 'green' }}>✅ Normal</td>
+              </tr>
+              <tr style={{ backgroundColor: '#f0f9ff' }}>
+                <td style={{ padding: '8px' }}>2026-03-10</td>
+                <td style={{ padding: '8px' }}>Dr. Khan</td>
+                <td style={{ padding: '8px' }}>Blood Pressure</td>
+                <td style={{ padding: '8px', color: 'orange' }}>⚠️ Monitor</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       )}
 

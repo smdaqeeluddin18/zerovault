@@ -3,8 +3,8 @@ import { groth16 } from 'snarkjs';
 export async function generateIdentityProof(secret, nullifier) {
   try {
     const input = {
-      secret: secret,
-      nullifier: nullifier,
+      secret: secret.toString(),
+      nullifier: nullifier.toString(),
     };
 
     const { proof, publicSignals } = await groth16.fullProve(
